@@ -1,17 +1,3 @@
-/*Manually
-
-Why this matters: Jenkins is another common way, alongside or instead of GitHub Actions, to automatically run your test suite as part of a build pipeline, especially in company/enterprise environments.
-
-Pipeline Stages:
-Checkout: Checks out the source code from the repository.
-Install Dependencies: Installs project dependencies using npm ci.
-Install Playwright Browsers & Dependencies: Installs Playwright browsers and copies the .env.example file to .env if it doesn't exist.
-Run Playwright Tests: Executes the selected Playwright test suite with the specified browser and mode (headless or headed).
-Post Actions: Archives test reports, publishes JUnit and Allure reports, and cleans up allure-results on success.
-Email Notification: Sends an email notification with the build status and links to the reports.
-
- */
-
 pipeline {
   agent any
   tools {
