@@ -33,14 +33,19 @@ pipeline {
     }
     stage('Install Dependencies') {
       steps {
-         powershell 'npm ci'
+         powershell 'npm ci --loglevel=error'
       }
     }
     stage('Install Playwright Browsers & Dependencies') {
       steps {
-
         powershell 'npx playwright install --with-deps'
         powershell 'Copy-Item .env.example .env -ErrorAction SilentlyContinue'
+      }
+    }
+    // 👇 ADD THIS STAGE TO WIPE STALE REPORTS BEFORE EVERY RUN
+    stage('Clean Old Reports') {
+      steps {
+        powershell 'Remove-Item -Recurse -Force -ErrorAction SilentlyContinue reports, custom-report, allure-results, test-results'
       }
     }
     stage('Run Playwright Tests') {
@@ -49,7 +54,7 @@ pipeline {
           def suite = params.TEST_SUITE
           def browserFlag = "--project=${params.BROWSER}"
           def modeFlag = params.MODE == 'headed' ? '--headed' : ''
-          powershell "npm run ${suite} -- ${browserFlag} ${modeFlag}"
+          powershell "npm run ${suite} --loglevel=error -- ${browserFlag} ${modeFlag}"
         }
       }
     }
@@ -94,11 +99,6 @@ pipeline {
         to: "dineshbabuvaddineni@gmail.com",
         mimeType: "text/html"
       )
-    }
-    success {
-      script {
-        powershell 'Remove-Item -Recurse -Force allure-results'
-      }
     }
   }
 }
