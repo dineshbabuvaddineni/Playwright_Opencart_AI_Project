@@ -1,7 +1,7 @@
 pipeline {
   agent any
   tools {
-    git 'Default'
+    git 'Mygit'
   }
   options { timestamps() }
   parameters {
