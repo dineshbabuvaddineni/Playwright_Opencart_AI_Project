@@ -1,7 +1,7 @@
 /**
  * Test Case: OpenCart UI + Admin + MySQL End-to-End Customer Validation
  *
- * Tags: @master @regression @db @end-to-end
+ * Tags: @db @local-only
  *
  * Steps:
  * 1) Register a customer through the frontend
@@ -16,7 +16,7 @@ import { executeQuery } from '../../utils/dbClient';
 
 dotenv.config();
 
-test('Register customer and validate across UI, Admin and DB @master @regression @db @e2e', async ({
+test('Register customer and validate across UI, Admin and DB @db @local-only', async ({
     homePage,
     registrationPage,
     adminLoginPage,
